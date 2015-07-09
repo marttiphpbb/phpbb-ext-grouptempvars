@@ -59,15 +59,18 @@ class listener implements EventSubscriberInterface
 		$user_id = $this->user->data['user_id'];
 
 		$sql = 'SELECT group_id 
-			FROM ' . USER_GROUP_TABLE . ' ug
-			WHERE ug.user_id = ' . $user_id;
+			FROM ' . USER_GROUP_TABLE . '
+			WHERE user_id = ' . $user_id . '
+				AND user_pending = 0';
 
-		$this->db->sql_query($sql);
+		$result = $this->db->sql_query($sql);
 
 		while ($group_id = $this->db->sql_fetchfield('group_id'))
 		{
 			$template_vars['S_GROUP_' . $group_id] = true;
 		}
+
+		$this->db->sql_freeresult($result);
 
 		if (sizeof($template_vars))
 		{
