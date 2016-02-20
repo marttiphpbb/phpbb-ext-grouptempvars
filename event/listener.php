@@ -30,6 +30,9 @@ class listener implements EventSubscriberInterface
 	/* @var user */
 	protected $user;
 
+	/* @var array */
+	private $group_temp_vars;
+
 	/**
 	 * @param db $db
 	 * @param template $template
@@ -49,13 +52,30 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.page_footer'		=> 'core_page_footer',
+			'core.page_footer'								=> 'page_footer',
+			'core.parse_attachments_modify_template_data' 	=> 'parse_attachments_modify_template_data',
 		);
 	}
 
-	public function core_page_footer($event)
+	public function page_footer($event)
 	{
-		$template_vars = array();
+		$this->set_group_temp_vars();
+	}
+
+	public function parse_attachments_modify_template_data($event)
+	{
+		$this->set_group_temp_vars();
+	}
+
+	private function set_group_temp_vars()
+	{
+		if (is_array($this->group_temp_vars))
+		{
+			return;
+		}
+
+		$this->group_temp_vars = array();
+
 		$user_id = $this->user->data['user_id'];
 
 		$sql = 'SELECT group_id 
@@ -67,14 +87,11 @@ class listener implements EventSubscriberInterface
 
 		while ($group_id = $this->db->sql_fetchfield('group_id'))
 		{
-			$template_vars['S_GROUP_' . $group_id] = true;
+			$this->group_temp_vars['S_GROUP_' . $group_id] = true;
 		}
 
 		$this->db->sql_freeresult($result);
 
-		if (sizeof($template_vars))
-		{
-			$this->template->assign_vars($template_vars);
-		}
+		$this->template->assign_vars($this->group_temp_vars);
 	}
 }
