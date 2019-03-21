@@ -17,7 +17,7 @@ class listener implements EventSubscriberInterface
 	protected $db;
 	protected $user;
 	protected $user_group_table;
-	protected $groups;
+	protected $groups = [];
 
 	public function __construct(
 		db $db,
@@ -33,29 +33,16 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return [
-			'core.twig_environment_render_template_before'
-				=> 'core_twig_environment_render_template_before',
 			'core.user_setup'
 				=> 'core_user_setup',
+			'core.twig_environment_render_template_before'
+				=> 'core_twig_environment_render_template_before',
 		];
 	}
 
-	public function core_twig_environment_render_template_before(event $event)
-	{
-		$context = $event['context'];
-		$context['marttiphpbb_grouptempvars'] = $this->groups;
-		foreach($this->groups as $group_id)
-		{
-			$context['S_GROUP_' . $group_id] = true;
-		}
-		$event['context'] = $context;
-	}
-
-	public function core_user_setup()
+	public function core_user_setup(event $event):void
 	{
 		$user_id = $this->user->data['user_id'];
-
-		$grouptempvars = [];
 
 		$sql = 'select group_id
 			from ' . $this->user_group_table . '
@@ -66,11 +53,23 @@ class listener implements EventSubscriberInterface
 
 		while ($group_id = $this->db->sql_fetchfield('group_id'))
 		{
-			$grouptempvars[$group_id] = true;
+			$this->groups[$group_id] = true;
 		}
 
 		$this->db->sql_freeresult($result);
+	}
 
-		$this->groups = $grouptempvars;
+	public function core_twig_environment_render_template_before(event $event):void
+	{
+		$context = $event['context'];
+
+		$context['marttiphpbb_grouptempvars'] = $this->groups;
+
+		foreach($this->groups as $group_id => $bool)
+		{
+			$context['S_GROUP_' . $group_id] = true;
+		}
+
+		$event['context'] = $context;
 	}
 }
