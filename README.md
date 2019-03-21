@@ -20,8 +20,8 @@ This extension might be useful together with the [Custom Code](https://github.co
 
 ## Requirements
 
-* phpBB 3.2.1+
-* PHP 7+
+* phpBB 3.2.5+
+* PHP 7.1+
 
 ## Quick Install
 
