@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Group Template Variables Extension for phpBB 3.1",
 	"homepage": "https://github.com/marttiphpbb/phpbb-ext-grouptempvars",
-	"version": "0.3.0",
+	"version": "1.1.0",
 	"time": "2019-03-21",
 	"keywords": ["phpbb", "extension", "template", "groups"],
 	"license": "GPL-2.0",
@@ -22,7 +22,7 @@
 	"extra": {
 		"display-name": "Group Template Variables",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.2.5"
+			"phpbb/phpbb": ">=3.3.0"
 		},
 		"version-check": {
 			"host": "marttiphpbb.github.io",
