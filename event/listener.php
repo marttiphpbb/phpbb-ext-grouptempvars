@@ -30,7 +30,7 @@ class listener implements EventSubscriberInterface
 		$this->user_group_table = $user_group_table;
 	}
 
-	static public function getSubscribedEvents()
+	static public function getSubscribedEvents():array
 	{
 		return [
 			'core.user_setup'
