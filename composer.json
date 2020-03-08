@@ -1,12 +1,12 @@
 {
 	"name": "marttiphpbb/grouptempvars",
 	"type": "phpbb-extension",
-	"description": "Group Template Variables Extension for phpBB 3.1",
+	"description": "Group Template Variables Extension for phpBB 3.3",
 	"homepage": "https://github.com/marttiphpbb/phpbb-ext-grouptempvars",
 	"version": "1.1.0",
-	"time": "2019-03-21",
+	"time": "2020-03-08",
 	"keywords": ["phpbb", "extension", "template", "groups"],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"authors": [{
 			"name": "martti",
 			"email": "info@martti.be",

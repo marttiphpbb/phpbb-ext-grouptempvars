@@ -20,12 +20,12 @@ This extension might be useful together with the [Custom Code](https://github.co
 
 ## Requirements
 
-* phpBB 3.2.5+
+* phpBB 3.3+
 * PHP 7.1+
 
 ## Quick Install
 
-You can install this on the latest release of phpBB 3.1 by following the steps below:
+You can install this on the latest release of phpBB by following the steps below:
 
 * Create `marttiphpbb/grouptempvars` in the `ext` directory.
 * Download and unpack the repository into `ext/marttiphpbb/grouptempvars`
